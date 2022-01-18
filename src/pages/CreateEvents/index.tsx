@@ -15,14 +15,28 @@ import {
 } from '@/modules/Builder/components'
 
 
-import { useCreateTokenForm } from '@/modules/Builder/hooks/useCreateTokenForm'
-import { useCreateTokenStore } from '@/modules/Builder/stores/CreateTokenStore'
-
 export default function CreateEvents() {
-    const intl = useIntl()
-    const creatingToken = useCreateTokenStore()
-    const creatingTokenForm = useCreateTokenForm()
 
+    const CreateEvent = async () => {
+        try {
+            const fetch = require('node-fetch');
+
+            let url = 'https://demetergift-database.vercel.app/api/create';
+
+            let options = {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Accept: 'application/json, text/plain, */*'
+                },
+                body: '{"title":"test","description":"test descripiton","endDate":"test endDate","Goal":32,"logolink":"https://github.com/sdf.png"}'
+            };
+
+            fetch(url, options);
+        } catch (error) {
+            console.error(error);
+        }
+    };
 
     // Application initialization
 
@@ -90,7 +104,7 @@ export default function CreateEvents() {
                             {EventLogoInput}
                         </div>
 
-                        <Button style={{ margin: "17px 0 0px 0px", width: "100%" }}>
+                        <Button style={{ margin: "17px 0 0px 0px", width: "100%" }} onClick={CreateEvent}>
                             Create Event
                         </Button>
                     </div>
