@@ -7,7 +7,7 @@
         "npm": ">=6"
     },
     "scripts": {
-        "start": "npx webpack serve --mode development --config webpack.config.ts",
+        "start": "npx webpack serve --config webpack.config.ts",
         "build": "npx webpack ",
         "lint": "npx eslint src --ext js,jsx,ts,tsx"
     },
