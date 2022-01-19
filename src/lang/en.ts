@@ -28,11 +28,11 @@ export default {
     FOOTER_NAV_TON_SCAN_LINK_TEXT: 'TON Scan',
     FOOTER_NAV_WTON_LINK_TEXT: 'WTON',
     FOOTER_NAV_CRYSTAL_WALLET_LINK_TEXT: 'Crystal Wallet',
-    FOOTER_GITHUB_LINK_TEXT: 'Source code on GitHub',
+
     FOOTER_TERMS_OF_USE_LINK_TEXT: 'Terms of use',
     FOOTER_PRIVACY_POLICY_LINK_TEXT: 'Privacy policy',
     FOOTER_COOKIES_TERMS_LINK_TEXT: 'Cookies',
-    FOOTER_COPYRIGHTS: '&copy; <a href="https://broxus.com" target="_blank" rel="noopener noreferrer">Broxus</a>, {year}',
+    FOOTER_COPYRIGHTS: '&copy; <a href="https://demetergift.com" target="_blank" rel="noopener noreferrer">Demetergift</a>, {year}',
 
     PAGINATION_BEFORE_TEXT: 'Page',
     PAGINATION_PAGE_OF: 'of {totalPages}',

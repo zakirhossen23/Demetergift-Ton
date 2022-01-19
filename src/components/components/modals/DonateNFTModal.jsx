@@ -2,9 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-
 import UseFormInput from '../UseFormInput';
-import { useRouter } from 'next/router';
 
 export default function DonateNFTModal({
 	show,
@@ -17,7 +15,6 @@ export default function DonateNFTModal({
 	enddate
 }) {
 
-	const router = useRouter();
 
 	console.log(contract);
 	const [name, nameInput] = UseFormInput({

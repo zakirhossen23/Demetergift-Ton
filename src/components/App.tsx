@@ -29,6 +29,8 @@ import { noop } from '@/utils'
 import { appRoutes } from '@/routes'
 import Home from '@/pages/Home'
 import CreateEvents from '@/pages/CreateEvents'
+import Donation from '@/pages/donation'
+import Auction from '@/pages/donation/auction'
 import './App.scss'
 
 
@@ -52,6 +54,13 @@ export function App(): JSX.Element {
                             <Route exact path="/CreateEvents">
                                 <CreateEvents />
                             </Route>
+                            <Route exact path="/donation">
+                                <Donation />
+                            </Route>
+                            <Route exact path='/donation/auction/:id'>
+                                <Auction />
+                            </Route>
+
                             <Route path={appRoutes.swap.path}>
                                 <Swap />
                             </Route>

@@ -5,7 +5,7 @@ import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import { Observer } from 'mobx-react-lite';
 import UseFormInput from '@/components/components/UseFormInput';
-
+import proxy from 'http-proxy-middleware';
 import { useIntl } from 'react-intl'
 
 import {
@@ -21,7 +21,7 @@ export default function CreateEvents() {
         try {
             const fetch = require('node-fetch');
 
-            let url = 'https://demetergift-database.vercel.app/api/create';
+            let url = 'http://localhost:8080/https://demetergift-database.vercel.app/api/create';
 
             let options = {
                 method: 'POST',
@@ -29,7 +29,7 @@ export default function CreateEvents() {
                     'Content-Type': 'application/json',
                     Accept: 'application/json, text/plain, */*'
                 },
-                body: '{"title":"test","description":"test descripiton","endDate":"test endDate","Goal":32,"logolink":"https://github.com/sdf.png"}'
+                body: `{"title":"${EventTitle}","description":"${EventDescription}","endDate":"${EventDate}","Goal":${EventGoal},"logolink":"${EventLogo}"}`
             };
 
             fetch(url, options);

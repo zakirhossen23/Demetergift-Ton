@@ -34,16 +34,7 @@ export function Footer(): JSX.Element {
                     </>
                 )}
             </Observer>
-            <a
-                href="https://github.com/broxus/ton-dex"
-                className="btn btn--xl btn--empty footer-tool"
-                target="_blank"
-                rel="noopener noreferrer"
-            >
-                {intl.formatMessage({
-                    id: 'FOOTER_GITHUB_LINK_TEXT',
-                })}
-            </a>
+
         </div>
     )
 
