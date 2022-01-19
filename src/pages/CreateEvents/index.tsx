@@ -32,7 +32,8 @@ export default function CreateEvents() {
                 body: `{"title":"${EventTitle}","description":"${EventDescription}","endDate":"${EventDate}","Goal":${EventGoal},"logolink":"${EventLogo}"}`
             };
 
-            fetch(url, options);
+            await fetch(url, options);
+            window.location.href = `/donation`;
         } catch (error) {
             console.error(error);
         }

@@ -29,12 +29,7 @@ export default function DonateNFTModal({
 		type: 'text',
 		placeholder: 'Enter image url',
 	});
-	const [NFTLogo, NFTLogoInput] = UseFormInput({
-		defaultValue: "",
-		type: 'file',
-		placeholder: 'NFT Logo',
-		id: 'logo',
-	});
+
 	const [price, priceInput] = UseFormInput({
 		type: 'text',
 		placeholder: 'Enter Price',
@@ -54,54 +49,25 @@ export default function DonateNFTModal({
 		if ("Cryptopunk" == type) {
 			tokenAddress = Cryptopunkaddress;
 		}
+		try {
+			const fetch = require('node-fetch');
 
-		const createdObject = {
-			title: 'Asset Metadata',
-			type: 'object',
-			properties: {
-				name: {
-					type: 'string',
-					description: name,
+			let url = 'http://localhost:8080/https://demetergift-database.vercel.app/api/createtoken';
+
+			let options = {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					Accept: 'application/json, text/plain, */*'
 				},
-				description: {
-					type: 'string',
-					description: description,
-				},
-				image: {
-					type: 'string',
-					description: Logourl,
-				},
-				price: {
-					type: 'string',
-					description: price
-				},
-				typeimg: {
-					type: 'string',
-					description: type
-				},
-				nftaddress: {
-					type: 'string',
-					description: tokenAddress
-				},
-				higherbidadd: {
-					type: 'string',
-					description: ""
-				},
-				date: {
-					type: 'string',
-					description: enddate
-				}
-			},
-			bids: []
-		};
-		console.log(createdObject);
-		const result = await contract.claimToken(
-			senderAddress,
-			JSON.stringify(createdObject),
-			EventID
-		);
-		router.push(`/donation/auction/${EventID}`);
-		console.log(result);
+				body: `{"eventid":${EventID},"name":"${name}","description":"${description}","Bidprice":${price},"price":${price},"type":"${type}","image":"${Logourl}"}`
+			};
+
+			await fetch(url, options);
+		} catch (error) {
+			console.error(error);
+		}
+		window.location.href = `/donation/auction/${EventID}`;
 		window.document.getElementsByClassName("btn-close")[0].click();
 
 	}
