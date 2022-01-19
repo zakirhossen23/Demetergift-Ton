@@ -64,7 +64,7 @@ export default function History({ contract, web3, decimals }) {
 									{returnValues.value /
 										Math.pow(10, decimals)}
 									, <b>Cost of the Transaction</b>:{' '}
-									{totalEthCost} ETH
+									{totalEthCost}
 								</p>
 							</li>
 						)

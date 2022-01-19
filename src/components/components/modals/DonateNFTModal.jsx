@@ -97,7 +97,7 @@ export default function DonateNFTModal({
 						{descriptionInput}
 					</Form.Group>
 					<Form.Group className="mb-3" controlId="formGroupName">
-						<Form.Label>Opening price in ETH</Form.Label>
+						<Form.Label>Opening price in EVER</Form.Label>
 						{priceInput}
 					</Form.Group>
 

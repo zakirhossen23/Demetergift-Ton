@@ -180,14 +180,13 @@ export class CreateTokenStore {
      * @returns {Promise<void>>}
      */
     public async createToken(): Promise<void> {
+
         if (
             !this.wallet.address
-            || !this.name
-            || !this.symbol
-            || !this.decimals
+
         ) {
             this.changeState('isCreating', false)
-            return
+
         }
 
         const processingId = (
@@ -197,21 +196,22 @@ export class CreateTokenStore {
         ).toString()
 
         this.changeState('isCreating', true)
-
+        console.log(this.decimals)
         try {
             await new Contract(TokenAbi.Factory, DexConstants.TokenFactoryAddress).methods.Token({
                 answer_id: processingId,
                 root_public_key: 0,
                 root_owner_address: new Address(this.wallet.address),
-                name: btoa(this.name),
-                symbol: btoa(this.symbol),
+                name: btoa(""),
+                symbol: btoa("this.symbol"),
                 decimals: this.decimals,
             }).send({
                 from: new Address(this.wallet.address),
-                amount: '000',
+                amount: this.decimals.toString(),
             })
         }
         catch (reason) {
+            console.log(reason)
             this.changeState('isCreating', false)
         }
 

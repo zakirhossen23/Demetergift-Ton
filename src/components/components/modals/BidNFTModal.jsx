@@ -4,6 +4,9 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
 import UseFormInput from '../UseFormInput';
+import { useCreateTokenForm } from '@/modules/Builder/hooks/useCreateTokenForm'
+import { useCreateTokenStore } from '@/modules/Builder/stores/CreateTokenStore'
+import { useWallet } from '@/stores/WalletService'
 
 export default function BidNFTModal({
 	show,
@@ -21,50 +24,44 @@ export default function BidNFTModal({
 		type: 'text',
 		placeholder: 'Amount',
 	});
+	const wallet = useWallet()
 
+	const creatingTokenForm = useCreateTokenForm()
 
 	function activateWarningModal() {
 		var alertELM = document.getElementById("alert");
 		alertELM.style = 'contents';
-		setAlert(`Amount cannot be under ${Highestbid} ETH`)
+		setAlert(`Amount cannot be under ${Highestbid} EVER`)
 	}
 	async function bidNFT() {
-		if (Amount < Highestbid) {
+		if (Number(Amount) < Number(Highestbid)) {
 			activateWarningModal();
 			return;
 		}
-		const tokenUri = await contract.tokenURI(tokenId);
-		var parsed = await JSON.parse(tokenUri);
-		if (Number(parsed['properties']['price']['description']) < Number(Amount)) {
-			parsed['properties']['price']['description'] = Amount;
-			parsed['properties']['higherbidadd']['description'] = senderAddress;
-
+		const creatingToken = useCreateTokenStore()
+		creatingToken.changeData('decimals', Number(Amount) * 1000000000);
+		var buttonProps = document.getElementById("")
+		console.log(creatingToken.decimals);
+		if (!wallet.account) {
+			buttonProps.innerText = "Connect to wallet"
+			await wallet.connect();
 		}
-		let currentDate = new Date();
-		const createdObject = {
-			title: 'Asset Metadata Bids',
-			type: 'object',
-			properties: {
-				username: {
-					type: 'string',
-					description: senderAddress
-				},
-				bid: {
-					type: 'string',
-					description: Amount
-				},
-				time: {
-					type: 'string',
-					description: currentDate
-				}
-			}
-		};
-		const result = await contract.createBid(tokenId, JSON.stringify(createdObject), JSON.stringify(parsed), eventId);
+		if (creatingToken.decimals != null) {
+
+			await creatingToken.createToken();
+		}
+
+
+
+		console.log(` given ${Amount} highest => ${Highestbid}`)
 
 
 		console.log(result);
 		window.document.getElementsByClassName("btn-close")[0].click();
 	}
+
+
+
 
 	return (
 		<Modal
@@ -89,7 +86,7 @@ export default function BidNFTModal({
 						{Alert}
 					</div>
 					<Form.Group className="mb-3" controlId="formGroupName">
-						<Form.Label>Bid Amount in ETH</Form.Label>
+						<Form.Label>Bid Amount in EVER</Form.Label>
 						{AmountInput}
 					</Form.Group>
 					<div className="d-grid">

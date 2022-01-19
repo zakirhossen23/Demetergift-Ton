@@ -1,18 +1,9 @@
 
 import Modal from 'react-bootstrap/Modal';
 import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/router';
-import Form from 'react-bootstrap/Form';
-import Head from 'next/head';
-import Row from 'react-bootstrap/Row';
-import Link from 'next/link';
-
 import Col from 'react-bootstrap/Col';
 import Image from 'react-bootstrap/Image';
 import Button from 'react-bootstrap/Button';
-
-import useContract from '../../services/useContract';
-
 
 
 export default function ViewmodalShow({
@@ -21,8 +12,6 @@ export default function ViewmodalShow({
 	id,
 	title
 }) {
-	const { contract, signerAddress } = useContract('ERC721');
-	const router = useRouter();
 	const [list, setList] = useState([]);
 
 	function addZero(num) {
@@ -38,7 +27,7 @@ export default function ViewmodalShow({
 
 	async function fetchContractData() {
 		try {
-			if (contract && id) {
+			if (id) {
 				const value = await contract.tokenURI(id);
 				console.log(value);
 				const arr = [];
@@ -50,7 +39,7 @@ export default function ViewmodalShow({
 					try { object = await JSON.parse(obj) } catch { }
 					if (object.title) {
 						var pricedes1 = 0;
-						try { pricedes1 = formatter.format(Number(object.properties.bid.description * 3817.09)) } catch (ex) { }
+						try { pricedes1 = formatter.format(Number(object.properties.bid.description * 0.371936)) } catch (ex) { }
 						const BidId = Number(await contract.getBidIdByUri(obj));
 						const Datetime = new Date(object.properties.time.description);
 
@@ -82,7 +71,7 @@ export default function ViewmodalShow({
 	useEffect(() => {
 		fetchContractData();
 
-	}, [router.query, contract]);
+	}, []);
 
 	return (
 		<Modal
@@ -124,7 +113,7 @@ export default function ViewmodalShow({
 										<h5 className="cell">{listItem.name}</h5>
 									</div>
 									<div className="tableRowCellBidContainer">
-										<h5 className="cell">${listItem.bidpriceusd} ({listItem.bidprice} ETH)</h5>
+										<h5 className="cell">${listItem.bidpriceusd} ({listItem.bidprice} EVER)</h5>
 									</div>
 								</div>
 							</div>

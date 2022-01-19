@@ -64,7 +64,7 @@ export default function Donation() {
                 console.log(value);
                 if (value) {
                     var pricedes1 = 0;
-                    try { pricedes1 = Number(value.Goal * 3817.09) } catch (ex) { }
+                    try { pricedes1 = Number(value.Goal * 0.371936) } catch (ex) { }
 
                     arr.push({
                         eventId: value.id,
@@ -167,7 +167,7 @@ export default function Donation() {
                             <h4 style={{ fontSize: '2.5rem' }}>{listItem.Title}</h4>
                             <div style={{ display: "flex", "whiteSpace": "pre-wrap" }}>
                                 <h4 style={{ fontSize: '2.5rem' }}>Goal:  </h4>
-                                <h4 style={{ fontSize: '2.5rem' }}>${listItem.Goalusd} ({listItem.Goal} ETH)</h4>
+                                <h4 style={{ fontSize: '2.5rem' }}>${listItem.Goalusd} ({listItem.Goal} EVER)</h4>
                             </div>
 
                             <div style={{

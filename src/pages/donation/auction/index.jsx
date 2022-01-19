@@ -4,6 +4,11 @@ import { useParams } from 'react-router-dom'
 import { eventgetbyid } from '../../Events/event'
 import { tokengetbyeventid } from '../../Events/token'
 
+
+import BidNFTModal from '../../../components/components/modals/BidNFTModal';
+import ViewBidNFTModal from '../../../components/components/modals/ViewBidNFTModal';
+
+
 export default function Auction() {
     const { id } = useParams();
 
@@ -65,7 +70,7 @@ export default function Auction() {
 
                     if (object.name) {
                         var pricedes1 = 0;
-                        try { pricedes1 = formatter.format(Number(object.Bidprice * 3817.09)) } catch (ex) { }
+                        try { pricedes1 = formatter.format(Number(object.Bidprice * 0.371936)) } catch (ex) { }
 
                         arr.push({
                             Id: object.id,
@@ -89,7 +94,7 @@ export default function Auction() {
 
 
                 setTitle(value.title);
-                setgoalusd(formatter.format(Number(value.Goal * 3817.09)));
+                setgoalusd(formatter.format(Number(value.Goal * 0.371936)));
                 setgoal(Number(value.Goal));
                 setdateleft(LeftDate(value.endDate));
                 setdate(value.endDate);
@@ -172,7 +177,7 @@ export default function Auction() {
                             }}>Goal: </h4>
                             <h4 style={{
                                 fontSize: '2.5rem'
-                            }}>$ {goalusd} ({goal} ETH)</h4>
+                            }}>$ {goalusd} ({goal} EVER)</h4>
                         </div>
                         <div className='TextContainer'>
                             <h4 style={{
@@ -210,7 +215,7 @@ export default function Auction() {
                             <div className='ElementBottomContainer'>
                                 <div style={{ width: "116px" }}>
                                     <h3 className="smallgrey">Current bid</h3>
-                                    <h4 className='bidprice'>$ {listItem.Bidprice} ({listItem.price} ETH)</h4>
+                                    <h4 className='bidprice'>$ {listItem.Bidprice} ({listItem.price} EVER)</h4>
                                     <h7 name="date" date={date} className="smallgrey">{dateleftBid}</h7>
                                 </div>
                                 <div className='BidAllcontainer' >
@@ -223,29 +228,48 @@ export default function Auction() {
 
 
                                         {listItem.type == "Cryptopunk" ? (
-                                            <div tokenid={listItem.Id} highestbid={listItem.price} className="Bidcontainer col">
+                                            <div tokenid={listItem.Id} highestbid={listItem.price} className="Bidcontainer col" onClick={activateBidCryptopunkTModal}>
                                                 <div tokenid={listItem.Id} highestbid={listItem.price} className="card BidcontainerCard">
                                                     <div tokenid={listItem.Id} highestbid={listItem.price} className="card-body bidbuttonText">Bid</div>
                                                 </div>
                                             </div>
                                         ) : (
-                                            <div tokenid={listItem.Id} highestbid={listItem.price} className="Bidcontainer col">
+                                            <div tokenid={listItem.Id} highestbid={listItem.price} className="Bidcontainer col" onClick={activateBidNFTModal}>
                                                 <div tokenid={listItem.Id} highestbid={listItem.price} className="card BidcontainerCard">
                                                     <div tokenid={listItem.Id} highestbid={listItem.price} className="card-body bidbuttonText">Bid</div>
                                                 </div>
                                             </div>
                                         )}
-
                                     </div>
-
-
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             ))}
+            <BidNFTModal
+                show={modalShow}
+                onHide={() => {
+                    setModalShow(false);
+                    // This is a poor implementation, better to implement an event listener
+                    fetchContractData();
+                }}
+                tokenId={selectid}
+                type={selecttype}
+                eventId={eventId}
+                Highestbid={selectbid}
+            />
 
+            <ViewBidNFTModal
+                show={ViewmodalShow}
+                onHide={() => {
+                    setViewModalShow(false);
+                    // This is a poor implementation, better to implement an event listener
+                    fetchContractData();
+                }}
+                id={selectid}
+                title={selecttitle}
+            />
         </>
     );
 }
