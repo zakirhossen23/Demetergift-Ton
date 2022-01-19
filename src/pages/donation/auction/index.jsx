@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import { useParams } from 'react-router-dom'
 import { eventgetbyid } from '../../Events/event'
-
+import { tokengetbyeventid } from '../../Events/token'
 
 export default function Auction() {
     const { id } = useParams();
@@ -58,33 +58,31 @@ export default function Auction() {
                 setEventId(id);
                 const value = await eventgetbyid(id);
                 const arr = [];
-                // const totalTokens = await contract.gettokenSearchEventTotal(id);
-                // for (let i = 0; i < Number(10); i++) {
-                //     const obj = await totalTokens[i];
 
-                //     const object = {};
-                //     try { object = await JSON.parse(obj) } catch { }
-                //     if (object.title) {
-                //         var pricedes1 = 0;
-                //         try { pricedes1 = formatter.format(Number(object.properties.price.description * 3817.09)) } catch (ex) { }
-                //         const TokenId = Number(await contract.gettokenIdByUri(obj));
-                //         console.log(TokenId);
-                //         arr.push({
-                //             Id: TokenId,
-                //             name: object.properties.name.description,
-                //             description: object.properties.description.description,
-                //             Bidprice: pricedes1,
-                //             price: Number(object.properties.price.description),
-                //             type: object.properties.typeimg.description,
-                //             image: object.properties.image.description,
-                //         });
-                //     }
+                const totalTokens = await tokengetbyeventid(id);
+                for (let i = 0; i < totalTokens.length; i++) {
+                    const object = await totalTokens[i];
 
-                // }
+                    if (object.name) {
+                        var pricedes1 = 0;
+                        try { pricedes1 = formatter.format(Number(object.Bidprice * 3817.09)) } catch (ex) { }
 
-                // setList(arr);
-                // if (document.getElementById("Loading"))
-                //     document.getElementById("Loading").style = "display:none";
+                        arr.push({
+                            Id: object.id,
+                            name: object.name,
+                            description: object.description,
+                            Bidprice: pricedes1,
+                            price: Number(object.price),
+                            type: object.type,
+                            image: object.image,
+                        });
+                    }
+
+                }
+
+                setList(arr);
+                if (document.getElementById("Loading"))
+                    document.getElementById("Loading").style = "display:none";
 
 
                 setEventuri(value);
@@ -189,7 +187,10 @@ export default function Auction() {
             </div>
             {list.map((listItem) => (
                 <div key={listItem.Id} className="row ElementsContainer bgWhite">
-                    <div style={{ "display": "flex" }}>
+                    <div style={{
+                        width: '100%',
+                        display: 'flex'
+                    }}>
                         {listItem.type == "Cryptopunk" ? (
                             <img src={listItem.image} className="AuctionBidImage pixel" />
                         ) : (
@@ -198,17 +199,17 @@ export default function Auction() {
 
                         <div style={{ width: "100%" }}>
                             <div className="DetialsContainer" style={{ rowGap: "5px" }} >
-                                <h4>{listItem.name}</h4>
+                                <h1 >{listItem.name}</h1>
 
-                                <h5 style={{ color: "rgb(139, 139, 139)" }}>Type: {listItem.type}</h5>
+                                <h4 style={{ color: "rgb(139, 139, 139)" }}>Type: {listItem.type}</h4>
 
                                 <div className="TextContainer">
-                                    <h5 style={{ color: "#8B8B8B" }}>{listItem.description}</h5>
+                                    <h4 style={{ color: "#8B8B8B" }}>{listItem.description}</h4>
                                 </div>
                             </div>
                             <div className='ElementBottomContainer'>
                                 <div style={{ width: "116px" }}>
-                                    <h7 className="smallgrey">Current bid</h7>
+                                    <h3 className="smallgrey">Current bid</h3>
                                     <h4 className='bidprice'>$ {listItem.Bidprice} ({listItem.price} ETH)</h4>
                                     <h7 name="date" date={date} className="smallgrey">{dateleftBid}</h7>
                                 </div>
