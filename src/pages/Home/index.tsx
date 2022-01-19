@@ -6,7 +6,7 @@ export default function Home() {
 	return (
 		<div className="mb-5">
 			<div className="row">
-				<img style={{ 'width': '340px' }} src='https://www.metisgift.com/Logo1.svg'></img>
+				<img style={{ 'width': '340px' }} src='https://svgshare.com/i/dZq.svg'></img>
 
 			</div>
 			<div className="row">
@@ -19,7 +19,7 @@ export default function Home() {
 			<div className="row">
 				<div style={{ 'width': '690px' }} className="col">
 					<div className="text-center">
-						<h4>MetisGift uses the power of the Metis Layer 2 infrastructure to create the most easy, transparent, fun and digital charity auction on the web!</h4>
+						<h4>DemeterGift uses the power of the Metis Layer 2 infrastructure to create the most easy, transparent, fun and digital charity auction on the web!</h4>
 					</div>
 				</div>
 			</div>

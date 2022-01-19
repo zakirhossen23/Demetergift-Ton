@@ -13,23 +13,6 @@ body {
     width: 100%;
 }
 
-body {
-    background: radial-gradient(50% 100% at 0% 0%, rgba(247, 97, 42, 0.16) 0%, rgba(246, 97, 42, 0) 100%),
-        radial-gradient(50% 100% at 100% 100%, rgba(197, 228, 243, 0.16) 0%, rgba(197, 228, 243, 0) 100%),
-        #050b2e;
-    color: #ffffff;
-    font: 400 16px/1.2 'PT Root UI', sans-serif;
-    -moz-font-feature-settings: 'kern';
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    min-height: 100%;
-    min-width: 310px;
-    opacity: 1;
-    overflow-x: hidden;
-    overflow-y: scroll;
-    position: relative;
-    -webkit-text-size-adjust: none;
-}
 
 ol,
 ul,

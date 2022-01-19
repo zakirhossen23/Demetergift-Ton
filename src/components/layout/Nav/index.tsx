@@ -42,18 +42,15 @@ export function Nav(): JSX.Element {
                         })}
                     </NavLink>
                 </li>
+
                 <li>
-                    <NavLink to="/farming">
-                        {intl.formatMessage({
-                            id: 'NAV_LINK_TEXT_FARMING',
-                        })}
+                    <NavLink to="/donation">
+                        Donation
                     </NavLink>
                 </li>
                 <li>
-                    <NavLink to="/builder">
-                        {intl.formatMessage({
-                            id: 'NAV_LINK_TEXT_BUILDER',
-                        })}
+                    <NavLink to="/CreateEvents">
+                        Create Events
                     </NavLink>
                 </li>
             </ul>
