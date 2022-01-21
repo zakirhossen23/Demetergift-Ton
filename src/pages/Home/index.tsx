@@ -25,7 +25,15 @@ export default function Home() {
 			</div>
 			<div className="row">
 				<div style={{ width: '250px' }} className="col">
-					<div style={{ 'background': '#00DECD', 'textAlign': 'center', 'cursor': 'pointer' }} className="card card-body">
+					<div style={{
+						background: '#0BD6BE',
+						textAlign: 'center',
+						cursor: 'pointer',
+						height: '73px',
+						padding: '36px 0',
+						width: '100%',
+						margin: '0'
+					}} className="card card-body">
 						<NavLink to="/donation">
 							<div className="card-body">Let’s donate!</div>
 						</NavLink>
