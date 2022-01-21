@@ -8,14 +8,15 @@ import { tokengetbyeventid } from '../../Events/token'
 import BidNFTModal from '../../../components/components/modals/BidNFTModal';
 import ViewBidNFTModal from '../../../components/components/modals/ViewBidNFTModal';
 
+import DonateNFTModal from '../../../components/components/modals/DonateNFTModal';
 
 export default function Auction() {
     const { id } = useParams();
+    const [CreatemodalShow, setDonateModalShow] = useState(false);
 
     const [eventId, setEventId] = useState(-1);
     const [list, setList] = useState([]);
-    const [tokenName, setTokenName] = useState('');
-    const [tokenSymbol, setTokenSymbol] = useState('');
+
     const [title, setTitle] = useState('');
     const [goalusd, setgoalusd] = useState('');
     const [goal, setgoal] = useState('');
@@ -58,52 +59,58 @@ export default function Auction() {
         return (da.toString() + "d " + h.toString() + "h " + m.toString() + "m " + s.toString() + "s");
     }
     async function fetchContractData() {
-        try {
-            if (id) {
-                setEventId(id);
-                const value = await eventgetbyid(id);
-                const arr = [];
 
-                const totalTokens = await tokengetbyeventid(id);
-                for (let i = 0; i < totalTokens.length; i++) {
-                    const object = await totalTokens[i];
+        if (id) {
+            while (true) {
+                try {
+                    setEventId(id);
+                    const value = await eventgetbyid(id);
+                    const arr = [];
 
-                    if (object.name) {
-                        var pricedes1 = 0;
-                        try { pricedes1 = formatter.format(Number(object.Bidprice * 0.371936)) } catch (ex) { }
+                    const totalTokens = await tokengetbyeventid(id);
+                    for (let i = 0; i < totalTokens.length; i++) {
+                        const object = await totalTokens[i];
 
-                        arr.push({
-                            Id: object.id,
-                            name: object.name,
-                            description: object.description,
-                            Bidprice: pricedes1,
-                            price: Number(object.price),
-                            type: object.type,
-                            image: object.image,
-                        });
+                        if (object.name) {
+                            var pricedes1 = 0;
+                            try { pricedes1 = formatter.format(Number(object.Bidprice * 0.371936)) } catch (ex) { }
+
+                            arr.push({
+                                Id: object.id,
+                                name: object.name,
+                                description: object.description,
+                                Bidprice: pricedes1,
+                                price: Number(object.price),
+                                type: object.type,
+                                image: object.image,
+                            });
+                        }
+
                     }
 
+                    setList(arr);
+                    if (document.getElementById("Loading"))
+                        document.getElementById("Loading").style = "display:none";
+
+
+                    setEventuri(value);
+
+
+                    setTitle(value.title);
+                    setgoalusd(formatter.format(Number(value.Goal * 0.371936)));
+                    setgoal(Number(value.Goal));
+                    setdateleft(LeftDate(value.endDate));
+                    setdate(value.endDate);
+                    setdateleftBid(LeftDateBid(value.endDate));
+                    setlogo(value.logolink);
+                    break;
+                } catch (error) {
+                    continue;
                 }
-
-                setList(arr);
-                if (document.getElementById("Loading"))
-                    document.getElementById("Loading").style = "display:none";
-
-
-                setEventuri(value);
-
-
-                setTitle(value.title);
-                setgoalusd(formatter.format(Number(value.Goal * 0.371936)));
-                setgoal(Number(value.Goal));
-                setdateleft(LeftDate(value.endDate));
-                setdate(value.endDate);
-                setdateleftBid(LeftDateBid(value.endDate));
-                setlogo(value.logolink);
             }
-        } catch (error) {
-            console.error(error);
+
         }
+
     }
     useEffect(() => {
         fetchContractData();
@@ -133,6 +140,8 @@ export default function Auction() {
 
     }
 
+
+
     function activateViewBidModal(e) {
         setselectid(e.target.getAttribute("tokenid"));
         setselecttitle(e.target.getAttribute("title"));
@@ -157,16 +166,33 @@ export default function Auction() {
         setModalShow(true);
     }
 
+
+    function activateCreateNFTModal(e) {
+        setselecttype("NFT");
+
+        setDonateModalShow(true);
+    }
+
+    function activateCreateCryptopunkModal(e) {
+        setselecttype("Cryptopunk");
+
+        setDonateModalShow(true);
+    }
+
     return (
         <>
 
             <div className="row EventContainer" >
                 <div style={{
                     display: 'flex',
-                    width: '100%'
+                    width: '100%',
+                    position: 'relative'
                 }}>
                     <img src={logo} className="AuctionImage" />
-                    <div className="DetialsContainer">
+                    <div className="DetialsContainer" style={{
+                        rowGap: '16px',
+                        paddingTop: '70px'
+                    }}>
                         <h4 style={{
                             fontSize: '2.5rem'
                         }} >{title}</h4>
@@ -185,6 +211,18 @@ export default function Auction() {
                             }} name='dateleft' date={date}>{dateleft}</h4>
                         </div>
                     </div>
+
+                    <div style={{ display: 'flex', gap: '14px', position: 'absolute', right: '25px' }} >
+                        <div onClick={activateCreateNFTModal} className="card" style={{ color: 'white', overflow: 'hidden', background: 'rgb(0, 222, 205)', textAlign: 'center', width: '172px', cursor: 'pointer', height: '48px', margin: '0', padding: '0px' }}>
+                            <div onClick={activateCreateNFTModal} className="card-body" style={{ height: '100%', paddingTop: '13%', fontSize: '21px' }}>Donate NFT</div>
+                        </div>
+                        <div className="card" onClick={activateCreateCryptopunkModal} style={{ color: 'white', overflow: 'hidden', background: 'rgb(0, 222, 205)', textAlign: 'center', cursor: 'pointer', float: 'right', width: '202px', height: '48px', padding: '0px' }}>
+                            <div onClick={activateCreateCryptopunkModal} className="card-body" style={{ height: '100%', paddingTop: '21px', fontSize: '21px' }}>Donate Cryptopunk</div>
+                        </div>
+
+                    </div>
+
+
                 </div>
             </div>
             <div id='Loading' className="LoadingArea">
@@ -270,6 +308,18 @@ export default function Auction() {
                 id={selectid}
                 title={selecttitle}
             />
+            <DonateNFTModal
+                show={CreatemodalShow}
+                onHide={() => {
+                    setDonateModalShow(false);
+                    // This is a poor implementation, better to implement an event listener
+                }}
+                EventID={eventId}
+                type={selecttype}
+                SelectedTitle={title}
+                enddate={date}
+            />
+
         </>
     );
 }

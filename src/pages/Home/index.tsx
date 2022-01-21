@@ -6,7 +6,7 @@ export default function Home() {
 	return (
 		<div className="mb-5">
 			<div className="row">
-				<img style={{ 'width': '340px' }} src='https://svgshare.com/i/dZq.svg'></img>
+				<img style={{ 'width': '340px' }} src='/favicon.svg'></img>
 
 			</div>
 			<div className="row">

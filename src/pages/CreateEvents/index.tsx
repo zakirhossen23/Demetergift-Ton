@@ -6,7 +6,9 @@ import Button from 'react-bootstrap/Button';
 import { Observer } from 'mobx-react-lite';
 import UseFormInput from '@/components/components/UseFormInput';
 import proxy from 'http-proxy-middleware';
-import { useIntl } from 'react-intl'
+import { useIntl } from 'react-intl';
+import { createEventAPI } from '@/pages/Events/event';
+import { CreatePlugin } from '@/pages/Events/event';
 
 import {
     BuilderField,
@@ -19,20 +21,12 @@ export default function CreateEvents() {
 
     const CreateEvent = async () => {
         try {
-            const fetch = require('node-fetch');
 
-            let url = 'http://localhost:8080/https://demetergift-database.vercel.app/api/create';
+            const id = await createEventAPI(EventTitle, EventDescription, EventDate, EventGoal, EventLogo);
+            if (document.getElementById("plugin").checked) {
+                CreatePlugin(`http://localhost:3000/donation/auction/${id}`);
+            }
 
-            let options = {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Accept: 'application/json, text/plain, */*'
-                },
-                body: `{"title":"${EventTitle}","description":"${EventDescription}","endDate":"${EventDate}","Goal":${EventGoal},"logolink":"${EventLogo}"}`
-            };
-
-            await fetch(url, options);
             window.location.href = `/donation`;
         } catch (error) {
             console.error(error);
@@ -72,6 +66,13 @@ export default function CreateEvents() {
         id: 'logo'
     });
 
+    const [EventPlugin, EventPluginInput] = UseFormInput({
+        defaultValue: "",
+        type: 'checkbox',
+        placeholder: 'Generate plugin?',
+        id: 'plugin'
+    });
+
     return (
         <><>
 
@@ -89,10 +90,6 @@ export default function CreateEvents() {
                         </div>
 
                         <div style={{ margin: "18px 0" }}>
-                            <h4>Event Description</h4>
-                            {EventDescriptionInput}
-                        </div>
-                        <div style={{ margin: "18px 0" }}>
                             <h4>Event End Date</h4>
                             {EventDateInput}
                         </div>
@@ -104,6 +101,19 @@ export default function CreateEvents() {
                             <h4>Event Logo Link</h4>
                             {EventLogoInput}
                         </div>
+
+                        <div style={{
+                            margin: '18px 0px',
+                            display: 'flex',
+                            alignContent: 'center',
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                            gap: '5px'
+                        }} >
+                            <input type="checkbox" id="plugin" />
+                            <h4>Generate Plugin?</h4>
+                        </div>
+
 
                         <Button style={{ margin: "17px 0 0px 0px", width: "100%" }} onClick={CreateEvent}>
                             Create Event

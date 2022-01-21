@@ -100,6 +100,12 @@ export default (_: any, options: any): WebpackConfig => {
             filename: path.resolve(__dirname, 'dist/index.html'),
             template: 'public/index.html',
             inject: false,
+        }), new HtmlWebpackPlugin({
+            title: 'Demtergift',
+            favicon: 'public/favicon.ico',
+            filename: path.resolve(__dirname, 'dist/index.html'),
+            template: 'public/index.html',
+            inject: false,
         }),
     )
 

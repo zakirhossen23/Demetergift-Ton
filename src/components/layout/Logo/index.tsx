@@ -10,7 +10,7 @@ export function Logo(): JSX.Element {
 
             <NavLink to="/">
                 <div style={{ "display": "flex" }}>
-                    <img className="NavImg" src="https://svgshare.com/i/d_q.svg" />
+                    <img className="NavImg" src="/favicon.svg" />
                     <div className="navbar-brand">DemeterGift</div>
                 </div>
             </NavLink>

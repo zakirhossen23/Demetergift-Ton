@@ -42,7 +42,7 @@ export default function Donation() {
 
             const fetch = require('node-fetch');
 
-            let url = 'http://localhost:8080/https://demetergift-database.vercel.app/api/events';
+            let url = 'https://cors-anyhere.herokuapp.com/https://demetergift-database.vercel.app/api/events';
 
             let options = {
                 method: 'GET',
@@ -112,7 +112,11 @@ export default function Donation() {
         var h = Math.floor((d % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         var m = Math.floor((d % (1000 * 60 * 60)) / (1000 * 60));
         var s = Math.floor((d % (1000 * 60)) / 1000);
-        return (da.toString() + " Days " + h.toString() + " hours " + m.toString() + " minutes " + s.toString() + " seconds");
+        var output = da.toString() + " Days " + h.toString() + " hours " + m.toString() + " minutes " + s.toString() + " seconds";
+        // if ("-" in output) {
+        //     output = "Expired!"
+        // }
+        return (output);
     }
 
     return (
@@ -141,11 +145,21 @@ export default function Donation() {
 
 
             {list.map((listItem) => (
-                <div key={listItem.eventId} className='row' style={{ height: "397px", margin: "28px", background: "white", color: "black", overflow: "hidden", padding: 0, }}>
+                <div key={listItem.eventId} className='row' style={{
+                    height: '397px',
+                    margin: '28px',
+                    display: 'flex',
+                    background: 'white',
+                    color: 'black',
+                    overflow: 'hidden',
+                    padding: '14px 7px',
+                    alignItems: 'flex-start',
+                    alignContent: 'flex-start'
+                }}>
                     <div style={{
                         display: 'flex',
                         width: '100%',
-                        padding: '0 17px'
+                        padding: '18px'
                     }}><h4 style={{
                         fontSize: '2.5rem',
                         float: 'left'
@@ -153,16 +167,19 @@ export default function Donation() {
                     <div style={{
                         display: 'flex',
                         width: '100%',
-                        padding: '0 18px'
+                        padding: '38px 18px'
                     }}>
-                        <img src={listItem.logo} style={{ maxHeight: "270px", minWidth: "284px" }} />
+                        <img src={listItem.logo} style={{
+                            height: '238px',
+                            width: '284px'
+                        }} />
                         <div style={{
-                            "paddingTop": "33px",
-                            "marginLeft": "82px",
-                            display: "flex",
-                            "flexDirection": "column",
-                            width: "100%",
-                            "rowGap": "10px"
+                            marginLeft: '82px',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            width: '100%',
+                            rowGap: '10px',
+                            alignContent: 'stretch'
                         }}>
                             <h4 style={{ fontSize: '2.5rem' }}>{listItem.Title}</h4>
                             <div style={{ display: "flex", "whiteSpace": "pre-wrap" }}>
@@ -172,13 +189,13 @@ export default function Donation() {
 
                             <div style={{
                                 display: 'flex',
-                                height: '20px',
+                                height: '100%',
                                 float: 'right',
                                 marginLeft: '0px',
-                                flexDirection: 'column'
+                                flexDirection: 'column',
+                                justifyContent: 'flex-end'
 
                             }}>
-                                <div className="card" style={{ "height": "100%", border: "0px" }}></div>
                                 <div style={{ "display": "flex", gap: "14px" }}>
 
                                     <div style={{
@@ -204,7 +221,7 @@ export default function Donation() {
                                         background: 'rgb(0, 222, 205)',
                                         textAlign: 'center',
                                         cursor: 'pointer',
-                                        height: '100%',
+
                                         float: 'right',
                                         padding: '0',
                                     }} eventid={listItem.eventId} onClick={activateCreateCryptopunkModal} date={listItem.Date} eventtitle={listItem.Title} className="card" >
@@ -222,7 +239,7 @@ export default function Donation() {
                                         background: 'rgb(0, 222, 205)',
                                         textAlign: 'center',
                                         cursor: 'pointer',
-                                        height: '100%',
+
                                         float: 'right',
                                         padding: '0',
                                     }} className="card" >
