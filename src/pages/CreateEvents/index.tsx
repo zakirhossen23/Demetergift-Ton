@@ -24,7 +24,7 @@ export default function CreateEvents() {
 
             const id = await createEventAPI(EventTitle, EventDescription, EventDate, EventGoal, EventLogo);
             if (document.getElementById("plugin").checked) {
-                CreatePlugin(`http://localhost:3000/donation/auction/${id}`);
+                CreatePlugin(`${window.location.hostname}/donation/auction/${id}`);
             }
 
             window.location.href = `/donation`;
