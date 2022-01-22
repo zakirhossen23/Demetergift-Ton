@@ -62,53 +62,53 @@ export default function Auction() {
     async function fetchContractData() {
 
         if (id && window.location.pathname == "/donation/auction") {
-            while (true) {
-                try {
-                    setEventId(id);
-                    const value = await eventgetbyid(id);
-                    const arr = [];
 
-                    const totalTokens = await tokengetbyeventid(id);
-                    for (let i = 0; i < totalTokens.length; i++) {
-                        const object = await totalTokens[i];
+            try {
+                setEventId(id);
+                const value = await eventgetbyid(id);
+                const arr = [];
 
-                        if (object.name) {
-                            var pricedes1 = 0;
-                            try { pricedes1 = formatter.format(Number(object.Bidprice * 0.371936)) } catch (ex) { }
+                const totalTokens = await tokengetbyeventid(id);
+                for (let i = 0; i < totalTokens.length; i++) {
+                    const object = await totalTokens[i];
 
-                            arr.push({
-                                Id: object.id,
-                                name: object.name,
-                                description: object.description,
-                                Bidprice: pricedes1,
-                                price: Number(object.price),
-                                type: object.type,
-                                image: object.image,
-                            });
-                        }
+                    if (object.name) {
+                        var pricedes1 = 0;
+                        try { pricedes1 = formatter.format(Number(object.Bidprice * 0.371936)) } catch (ex) { }
 
+                        arr.push({
+                            Id: object.id,
+                            name: object.name,
+                            description: object.description,
+                            Bidprice: pricedes1,
+                            price: Number(object.price),
+                            type: object.type,
+                            image: object.image,
+                        });
                     }
 
-                    setList(arr);
-                    if (document.getElementById("Loading"))
-                        document.getElementById("Loading").style = "display:none";
-
-
-                    setEventuri(value);
-
-
-                    setTitle(value.title);
-                    setgoalusd(formatter.format(Number(value.Goal * 0.371936)));
-                    setgoal(Number(value.Goal));
-                    setdateleft(LeftDate(value.endDate));
-                    setdate(value.endDate);
-                    setdateleftBid(LeftDateBid(value.endDate));
-                    setlogo(value.logolink);
-                    break;
-                } catch (error) {
-                    continue;
                 }
+
+                setList(arr);
+                if (document.getElementById("Loading"))
+                    document.getElementById("Loading").style = "display:none";
+
+
+                setEventuri(value);
+
+
+                setTitle(value.title);
+                setgoalusd(formatter.format(Number(value.Goal * 0.371936)));
+                setgoal(Number(value.Goal));
+                setdateleft(LeftDate(value.endDate));
+                setdate(value.endDate);
+                setdateleftBid(LeftDateBid(value.endDate));
+                setlogo(value.logolink);
+
+            } catch (error) {
+
             }
+
 
         }
 
