@@ -11,9 +11,7 @@ export async function tokengetbyeventid(eventid) {
             'Content-Type': 'application/json',
             Accept: 'application/json, text/plain, */*'
         },
-        data: {
-            "id": eventid
-        }
+        data: `{"id": ${eventid}}`
     };
     var allTokens;
     var booltrue = true;
