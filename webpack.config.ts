@@ -97,8 +97,8 @@ export default (_: any, options: any): WebpackConfig => {
             inject: false,
         })
         , new HtmlWebpackPlugin({
-            title: 'Demtergift',
-            filename: path.resolve(__dirname, 'dist/auction/index.html'),
+            title: 'Demtergift-Auction',
+            filename: path.resolve(__dirname, 'dist/donation/auction/index.html'),
             template: 'public/index.html',
             inject: false,
         })
