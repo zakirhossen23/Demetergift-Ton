@@ -57,7 +57,7 @@ export function App(): JSX.Element {
                             <Route exact path="/donation">
                                 <Donation />
                             </Route>
-                            <Route exact path='/donation/auction/:id'>
+                            <Route path='/donation/auction/:id'>
                                 <Auction />
                             </Route>
 

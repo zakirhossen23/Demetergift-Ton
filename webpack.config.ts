@@ -28,7 +28,7 @@ export default (_: any, options: any): WebpackConfig => {
     config.entry = {
         '/index': path.resolve(__dirname, 'src/index'),
         "/donation": path.resolve(__dirname, 'src/pages/donation/index'),
-        "/donation/auction/[id]": path.resolve(__dirname, 'src/pages/donation/auction/index'),
+        "/donation/auction": path.resolve(__dirname, 'src/pages/donation/auction'),
     }
 
     /*
@@ -39,7 +39,7 @@ export default (_: any, options: any): WebpackConfig => {
 
     config.output = {
         path: path.resolve(__dirname, 'dist'),
-        filename: '[name].js'
+        filename: '[name].js',
     }
 
     /*
@@ -91,14 +91,14 @@ export default (_: any, options: any): WebpackConfig => {
             inject: false,
         })
         , new HtmlWebpackPlugin({
-            title: 'Demtergift',
+            title: 'Demtergift - Donation',
             filename: path.resolve(__dirname, 'dist/donation/index.html'),
             template: 'public/index.html',
             inject: false,
         })
         , new HtmlWebpackPlugin({
-            title: 'Demtergift-Auction',
-            filename: path.resolve(__dirname, 'dist/donation/auction/index.html'),
+            title: 'Demtergift - Auction',
+            filename: path.resolve(__dirname, 'dist/donation/auction.html'),
             template: 'public/index.html',
             inject: false,
         })
@@ -134,7 +134,7 @@ export default (_: any, options: any): WebpackConfig => {
     config.module = {
         rules: [
             {
-                test: /\.(ts|tsx|js|jsx)?$/,
+                test: /\.(ts|tsx|js|jsx)$/i,
                 exclude: /node_modules/,
                 use: 'babel-loader',
             },
