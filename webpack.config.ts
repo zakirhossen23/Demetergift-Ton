@@ -26,7 +26,8 @@ export default (_: any, options: any): WebpackConfig => {
      */
 
     config.entry = {
-        '/index': path.resolve(__dirname, 'src/index')
+        '/index': path.resolve(__dirname, 'src/index'),
+        "/pools": path.resolve(__dirname, 'src/index'),
     }
 
     /*
