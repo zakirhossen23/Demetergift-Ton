@@ -11,7 +11,8 @@ import ViewBidNFTModal from '../../../components/components/modals/ViewBidNFTMod
 import DonateNFTModal from '../../../components/components/modals/DonateNFTModal';
 
 export default function Auction() {
-    const { id } = useParams();
+    const id = window.location.search.replace("?", "")
+
     const [CreatemodalShow, setDonateModalShow] = useState(false);
 
     const [eventId, setEventId] = useState(-1);
