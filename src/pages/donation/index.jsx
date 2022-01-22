@@ -246,7 +246,7 @@ export default function Donation() {
                                         float: 'right',
                                         padding: '0',
                                     }} className="card" >
-                                        <NavLink to={`/donation/auction/${listItem.eventId}`}>
+                                        <NavLink to={`/donation/auction?${listItem.eventId}`}>
 
                                             <div className="card-body" style={{
                                                 height: '100%',
