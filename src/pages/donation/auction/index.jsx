@@ -29,7 +29,7 @@ export default function Auction() {
     const [selecttitle, setselecttitle] = useState('');
     const [selecttype, setselecttype] = useState('');
     const [selectbid, setselectbid] = useState('');
-
+    const boolTrue = true;
     const [eventuri, setEventuri] = useState('');
     const [modalShow, setModalShow] = useState(false);
     const [ViewmodalShow, setViewModalShow] = useState(false);
@@ -62,50 +62,52 @@ export default function Auction() {
     async function AuctionfetchContractData() {
 
         if (id && window.location.pathname == "/donation/auction") {
+            while (boolTrue) {
+                try {
+                    setEventId(id);
+                    const value = await eventgetbyid(id);
+                    const arr = [];
 
-            try {
-                setEventId(id);
-                const value = await eventgetbyid(id);
-                const arr = [];
+                    const totalTokens = await tokengetbyeventid(id);
+                    for (let i = 0; i < totalTokens.length; i++) {
+                        const object = await totalTokens[i];
 
-                const totalTokens = await tokengetbyeventid(id);
-                for (let i = 0; i < totalTokens.length; i++) {
-                    const object = await totalTokens[i];
+                        if (object.name) {
+                            var pricedes1 = 0;
+                            try { pricedes1 = formatter.format(Number(object.Bidprice * 0.371936)) } catch (ex) { }
 
-                    if (object.name) {
-                        var pricedes1 = 0;
-                        try { pricedes1 = formatter.format(Number(object.Bidprice * 0.371936)) } catch (ex) { }
+                            arr.push({
+                                Id: object.id,
+                                name: object.name,
+                                description: object.description,
+                                Bidprice: pricedes1,
+                                price: Number(object.price),
+                                type: object.type,
+                                image: object.image,
+                            });
+                        }
 
-                        arr.push({
-                            Id: object.id,
-                            name: object.name,
-                            description: object.description,
-                            Bidprice: pricedes1,
-                            price: Number(object.price),
-                            type: object.type,
-                            image: object.image,
-                        });
                     }
 
+                    setList(arr);
+                    if (document.getElementById("Loading"))
+                        document.getElementById("Loading").style = "display:none";
+
+
+                    setEventuri(value);
+                    setTitle(value.title);
+                    setgoalusd(formatter.format(Number(value.Goal * 0.371936)));
+                    setgoal(Number(value.Goal));
+                    setdateleft(LeftDate(value.endDate));
+                    setdate(value.endDate);
+                    setdateleftBid(LeftDateBid(value.endDate));
+                    setlogo(value.logolink);
+                    break;
+                } catch (error) {
+                    continue;
                 }
-
-                setList(arr);
-                if (document.getElementById("Loading"))
-                    document.getElementById("Loading").style = "display:none";
-
-
-                setEventuri(value);
-                setTitle(value.title);
-                setgoalusd(formatter.format(Number(value.Goal * 0.371936)));
-                setgoal(Number(value.Goal));
-                setdateleft(LeftDate(value.endDate));
-                setdate(value.endDate);
-                setdateleftBid(LeftDateBid(value.endDate));
-                setlogo(value.logolink);
-
-            } catch (error) {
-
             }
+
 
 
         }
