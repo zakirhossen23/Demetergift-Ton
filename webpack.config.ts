@@ -27,7 +27,7 @@ export default (_: any, options: any): WebpackConfig => {
 
     config.entry = {
         '/index': path.resolve(__dirname, 'src/index'),
-        "/pools": path.resolve(__dirname, 'src/index'),
+        "/donation": path.resolve(__dirname, 'src/index'),
     }
 
     /*
@@ -88,6 +88,11 @@ export default (_: any, options: any): WebpackConfig => {
             filename: path.resolve(__dirname, 'dist/index.html'),
             template: 'public/index.html',
             inject: false,
+        })
+        , new HtmlWebpackPlugin({
+            filename: path.resolve(__dirname, 'dist/donation/index.html'),
+            template: 'public/index.html',
+            inject: true,
         })
     )
 
