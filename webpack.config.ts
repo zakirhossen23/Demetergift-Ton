@@ -98,7 +98,7 @@ export default (_: any, options: any): WebpackConfig => {
         })
         , new HtmlWebpackPlugin({
             title: 'Demtergift - Auction',
-            filename: path.resolve(__dirname, 'dist/donation/auction.html'),
+            filename: path.resolve(__dirname, 'dist/donation/auction/index.html'),
             template: 'public/index.html',
             inject: false,
         })
