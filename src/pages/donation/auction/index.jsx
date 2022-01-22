@@ -59,7 +59,7 @@ export default function Auction() {
         var s = Math.floor((d % (1000 * 60)) / 1000);
         return (da.toString() + "d " + h.toString() + "h " + m.toString() + "m " + s.toString() + "s");
     }
-    async function fetchContractData() {
+    async function AuctionfetchContractData() {
 
         if (id && window.location.pathname == "/donation/auction") {
 
@@ -112,7 +112,7 @@ export default function Auction() {
 
     }
     useEffect(() => {
-        fetchContractData();
+        AuctionfetchContractData();
 
     }, []);
 
