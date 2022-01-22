@@ -62,6 +62,7 @@ export default function Auction() {
     async function AuctionfetchContractData() {
 
         if (id && window.location.pathname == "/donation/auction") {
+            console.log("started chekcing");
             while (boolTrue) {
                 try {
                     setEventId(id);
