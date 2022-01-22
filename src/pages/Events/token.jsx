@@ -6,7 +6,7 @@ export async function tokengetbyeventid(eventid) {
     let url = 'https://cors-anyhere.herokuapp.com/https://demetergift-database.vercel.app/api/tokensbyevent';
 
     let options = {
-        method: 'GET',
+        method: 'POST',
         headers: {
             'Content-Type': 'application/json',
             Accept: 'application/json, text/plain, */*'

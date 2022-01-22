@@ -95,8 +95,6 @@ export default function Auction() {
 
 
                 setEventuri(value);
-
-
                 setTitle(value.title);
                 setgoalusd(formatter.format(Number(value.Goal * 0.371936)));
                 setgoal(Number(value.Goal));
