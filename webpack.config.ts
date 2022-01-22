@@ -26,8 +26,7 @@ export default (_: any, options: any): WebpackConfig => {
      */
 
     config.entry = {
-        index: path.resolve(__dirname, 'src/index'),
-        auction: path.resolve(__dirname, 'src/pages/donation/auction'),
+        '/index': path.resolve(__dirname, 'src/index')
     }
 
     /*
@@ -38,9 +37,7 @@ export default (_: any, options: any): WebpackConfig => {
 
     config.output = {
         path: path.resolve(__dirname, 'dist'),
-        filename: 'js/[name]-[contenthash:6].js',
-        publicPath: '/',
-        clean: true,
+        filename: '[name].js'
     }
 
     /*
@@ -58,27 +55,10 @@ export default (_: any, options: any): WebpackConfig => {
         },
     } : {
         splitChunks: {
-            chunks: (chunk) => !/^(polyfills|pages|modules)$/.test(chunk.name),
             cacheGroups: {
-                vendor: {
-                    chunks: 'all',
-                    name: 'vendors',
-                    test: /(?<!node_modules.*)[\\/]node_modules[\\/]/,
-                    priority: 40,
-                    enforce: true,
-                },
-                common: {
-                    name: 'commons',
-                    test: /(common|layout|hooks|misc)/,
-                    minChunks: 1,
-                    priority: 30,
-                    reuseExistingChunk: true,
-                },
                 default: false,
                 vendors: false,
             },
-            maxInitialRequests: 10,
-            minSize: 30000,
         },
     }
 
@@ -107,7 +87,7 @@ export default (_: any, options: any): WebpackConfig => {
             filename: path.resolve(__dirname, 'dist/index.html'),
             template: 'public/index.html',
             inject: false,
-        }),
+        })
     )
 
     if (isProduction) {
@@ -140,7 +120,7 @@ export default (_: any, options: any): WebpackConfig => {
     config.module = {
         rules: [
             {
-                test: /\.(ts|js)x?$/,
+                test: /\.(ts|tsx|js|jsx)?$/,
                 exclude: /node_modules/,
                 use: 'babel-loader',
             },
@@ -207,7 +187,7 @@ export default (_: any, options: any): WebpackConfig => {
             host: HOST,
             port: PORT,
             contentBase: [
-                path.join(__dirname + '/dist'),
+                path.resolve(__dirname + '/dist'),
             ],
             inline: hmrDisabled ? false : true,
             hot: hmrDisabled ? false : true,

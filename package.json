@@ -9,6 +9,7 @@
     "scripts": {
         "start": "npx webpack serve --mode development --config webpack.config.ts",
         "build": "npx webpack --mode development --config webpack.config.ts",
+        "dev": "npx webpack serve --mode development --config webpack.config.ts",
         "lint": "npx eslint src --ext js,jsx,ts,tsx"
     },
     "dependencies": {
