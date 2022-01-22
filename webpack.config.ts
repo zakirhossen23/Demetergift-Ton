@@ -92,7 +92,7 @@ export default (_: any, options: any): WebpackConfig => {
         , new HtmlWebpackPlugin({
             filename: path.resolve(__dirname, 'dist/donation/index.html'),
             template: 'public/index.html',
-            inject: true,
+            inject: false,
         })
     )
 
