@@ -28,7 +28,7 @@ export default (_: any, options: any): WebpackConfig => {
     config.entry = {
         '/index': path.resolve(__dirname, 'src/index'),
         "/donation": path.resolve(__dirname, 'src/pages/donation/index'),
-        "/auction/": path.resolve(__dirname, 'src/pages/donation/auction/index'),
+        "/donation/auction/": path.resolve(__dirname, 'src/pages/donation/auction/index'),
     }
 
     /*
