@@ -28,6 +28,7 @@ export default (_: any, options: any): WebpackConfig => {
     config.entry = {
         '/index': path.resolve(__dirname, 'src/index'),
         "/donation": path.resolve(__dirname, 'src/pages/donation/index'),
+        "/auction/": path.resolve(__dirname, 'src/pages/donation/auction/index'),
     }
 
     /*
@@ -92,6 +93,12 @@ export default (_: any, options: any): WebpackConfig => {
         , new HtmlWebpackPlugin({
             title: 'Demtergift',
             filename: path.resolve(__dirname, 'dist/donation/index.html'),
+            template: 'public/index.html',
+            inject: false,
+        })
+        , new HtmlWebpackPlugin({
+            title: 'Demtergift',
+            filename: path.resolve(__dirname, 'dist/auction/index.html'),
             template: 'public/index.html',
             inject: false,
         })
