@@ -41,15 +41,13 @@ export async function createBid(Tokenid, UserName, Bidprice) {
             'Content-Type': 'application/json',
             Accept: 'application/json, text/plain, */*'
         },
-        body: `{"id": ${Tokenid},"Date": "${currentDate}","UserName": "${UserName}","Bidprice": ${Bidprice}}`
+        body: `{"Tokenid":${Tokenid},"Date":"${currentDate}","UserName":"${UserName._address}","Bidprice": ${Bidprice}}`
     };
-    var booltrue = true;
     while (booltrue) {
         try {
-            await fetch(url, options).then(res => res.json());
-        } catch (er) {
-            continue;
-        }
+            await fetch(url, options)
+                .then(res => res.json())
+        } catch (er) { continue; }
         break;
     }
 }
@@ -71,13 +69,16 @@ export async function bidsgetbytokenid(Tokenid) {
     };
     var allBids;
     var booltrue = true;
+
+
     while (booltrue) {
         try {
-            await fetch(url, options).then(res => res.json())
+            await fetch(url, options)
+                .then(res => res.json())
                 .then(json => allBids = json)
-        } catch (er) {
-            continue;
-        }
+        } catch (er) { continue; }
+
+
         break;
     }
 

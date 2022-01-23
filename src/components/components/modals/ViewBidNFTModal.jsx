@@ -43,8 +43,8 @@ export default function ViewmodalShow({
 						arr.push({
 							Date: currentdate,
 							UserName: object.UserName,
-							bidpriceusd: formatter.format(Bidprice * 0.371936),
-							Bidprice: Bidprice
+							bidpriceusd: formatter.format(object.Bidprice * 0.371936),
+							Bidprice: object.Bidprice
 						});
 
 					}

@@ -40,7 +40,7 @@ export default function BidNFTModal({
 		const creatingToken = useCreateTokenStore()
 		creatingToken.changeData('decimals', Number(Amount) * 1000000000);
 		creatingToken.changeData('ToAddress', ToAddress);
-		var buttonProps = document.getElementById("")
+		var buttonProps = document.getElementsByClassName("btn btn-primary")[0];
 		console.log(creatingToken.decimals);
 		if (!wallet.account) {
 			buttonProps.innerText = "Connect to wallet"
@@ -55,8 +55,8 @@ export default function BidNFTModal({
 
 		console.log(`given ${Amount} highest => ${Highestbid}`)
 
-		//	window.location.reload();
-		//	window.document.getElementsByClassName("btn-close")[0].click();
+		window.location.reload();
+		window.document.getElementsByClassName("btn-close")[0].click();
 	}
 
 
