@@ -177,7 +177,7 @@ export default function Donation() {
                             width: '284px'
                         }} />
                         <div style={{
-                            marginLeft: '82px',
+                            marginLeft: '50px',
                             display: 'flex',
                             flexDirection: 'column',
                             width: '100%',
@@ -194,10 +194,11 @@ export default function Donation() {
                                 display: 'flex',
                                 height: '100%',
                                 float: 'right',
+                                alignItems: 'flex-end',
                                 marginLeft: '0px',
                                 flexDirection: 'column',
+                                width: '100%',
                                 justifyContent: 'flex-end'
-
                             }}>
                                 <div style={{ "display": "flex", gap: "14px" }}>
 
@@ -208,6 +209,7 @@ export default function Donation() {
                                         textAlign: 'center',
                                         cursor: 'pointer',
                                         height: '72px',
+                                        width: '28em',
                                         float: 'right',
                                         padding: '0px'
                                     }} eventid={listItem.eventId} date={listItem.Date} eventtitle={listItem.Title} className="card" onClick={activateCreateNFTModal}>
@@ -224,7 +226,7 @@ export default function Donation() {
                                         background: '#0BD6BE',
                                         textAlign: 'center',
                                         cursor: 'pointer',
-
+                                        width: '33em',
                                         float: 'right',
                                         padding: '0',
                                     }} eventid={listItem.eventId} onClick={activateCreateCryptopunkModal} date={listItem.Date} eventtitle={listItem.Title} className="card" >
@@ -242,7 +244,7 @@ export default function Donation() {
                                         background: '#0BD6BE',
                                         textAlign: 'center',
                                         cursor: 'pointer',
-
+                                        width: '27em',
                                         float: 'right',
                                         padding: '0',
                                     }} className="card" >

@@ -7,14 +7,13 @@ import UseFormInput from '../UseFormInput';
 import { useCreateTokenForm } from '@/modules/Builder/hooks/useCreateTokenForm'
 import { useCreateTokenStore } from '@/modules/Builder/stores/CreateTokenStore'
 import { useWallet } from '@/stores/WalletService'
+import { createBid } from '@/pages/Events/token'
 
 export default function BidNFTModal({
 	show,
 	onHide,
-	contract,
-	senderAddress,
+	ToAddress,
 	tokenId,
-	eventId,
 	type,
 	Highestbid
 
@@ -25,7 +24,7 @@ export default function BidNFTModal({
 		placeholder: 'Amount',
 	});
 	const wallet = useWallet()
-
+	console.log(ToAddress);
 	const creatingTokenForm = useCreateTokenForm()
 
 	function activateWarningModal() {
@@ -40,6 +39,7 @@ export default function BidNFTModal({
 		}
 		const creatingToken = useCreateTokenStore()
 		creatingToken.changeData('decimals', Number(Amount) * 1000000000);
+		creatingToken.changeData('ToAddress', ToAddress);
 		var buttonProps = document.getElementById("")
 		console.log(creatingToken.decimals);
 		if (!wallet.account) {
@@ -51,13 +51,12 @@ export default function BidNFTModal({
 			await creatingToken.createToken();
 		}
 
+		await createBid(tokenId, wallet.account.address, Amount);
 
+		console.log(`given ${Amount} highest => ${Highestbid}`)
 
-		console.log(` given ${Amount} highest => ${Highestbid}`)
-
-
-		console.log(result);
-		window.document.getElementsByClassName("btn-close")[0].click();
+		//	window.location.reload();
+		//	window.document.getElementsByClassName("btn-close")[0].click();
 	}
 
 

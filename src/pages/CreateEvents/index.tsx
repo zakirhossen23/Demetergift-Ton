@@ -22,7 +22,7 @@ export default function CreateEvents() {
     const CreateEvent = async () => {
         try {
 
-            const id = await createEventAPI(EventTitle, EventDescription, EventDate, EventGoal, EventLogo);
+            const id = await createEventAPI(EventTitle, EventDescription, EventDate, EventWalletAddressGoal, EventGoal, EventLogo);
             if (document.getElementById("plugin").checked) {
                 CreatePlugin(`https://${window.location.hostname}/donation/auction?${id}`);
             }
@@ -54,6 +54,12 @@ export default function CreateEvents() {
         placeholder: 'Event End Date ',
         id: 'enddate',
     });
+    const [EventWalletAddressGoal, EventWalletAddressInput] = UseFormInput({
+        defaultValue: "",
+        type: 'text',
+        placeholder: 'Ever Wallet Address',
+        id: 'wallet',
+    });
     const [EventGoal, EventGoalInput] = UseFormInput({
         defaultValue: "",
         type: 'text',
@@ -67,12 +73,6 @@ export default function CreateEvents() {
         id: 'logo'
     });
 
-    const [EventPlugin, EventPluginInput] = UseFormInput({
-        defaultValue: "",
-        type: 'checkbox',
-        placeholder: 'Generate plugin?',
-        id: 'plugin'
-    });
 
     return (
         <><>
@@ -93,6 +93,10 @@ export default function CreateEvents() {
                         <div style={{ margin: "18px 0" }}>
                             <h4>Event End Date</h4>
                             {EventDateInput}
+                        </div>
+                        <div style={{ margin: "18px 0" }}>
+                            <h4>EVER Wallet Address</h4>
+                            {EventWalletAddressInput}
                         </div>
                         <div style={{ margin: "18px 0" }}>
                             <h4>Event Goal</h4>

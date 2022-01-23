@@ -236,6 +236,7 @@ export class TokenWallet {
             send_gas_to: args.owner,
         }).send({
             from: args.owner,
+            recipient: args.recipient,
             bounce: args.bounce,
             amount: args.grams || '500000000',
         })

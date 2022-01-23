@@ -63,13 +63,7 @@ export function Footer(): JSX.Element {
                                         })}
                                     </NavLink>
                                 </li>
-                                <li>
-                                    <NavLink to="/pools">
-                                        {intl.formatMessage({
-                                            id: 'NAV_LINK_TEXT_POOLS',
-                                        })}
-                                    </NavLink>
-                                </li>
+
                                 <li>
                                     <NavLink to="/tokens">
                                         {intl.formatMessage({

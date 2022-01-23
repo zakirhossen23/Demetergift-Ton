@@ -34,19 +34,16 @@ export async function eventgetbyid(id) {
 
 }
 
-export async function createEventAPI(EventTitle, EventDescription, EventDate, EventGoal, EventLogo) {
+export async function createEventAPI(EventTitle, EventDescription, EventDate, EventWalletAddressGoal, EventGoal, EventLogo) {
     const fetch = require('node-fetch');
-
     let url = 'https://cors-anyhere.herokuapp.com/https://demetergift-database.vercel.app/api/create';
-
-
     let options = {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
             Accept: 'application/json, text/plain, */*'
         },
-        body: `{"title":"${EventTitle}","description":"${EventDescription}","endDate":"${EventDate}","Goal":${EventGoal},"logolink":"${EventLogo}"}`
+        body: `{"title":"${EventTitle}","description":"${EventDescription}","endDate":"${EventDate}" ,"Goal":${EventGoal},"logolink":"${EventLogo}", "wallet":"${EventWalletAddressGoal}"}`
     };
 
     var allEvents;
@@ -60,11 +57,7 @@ export async function createEventAPI(EventTitle, EventDescription, EventDate, Ev
         }
         break;
     }
-
-
     return allEvents.id;
-
-
 }
 
 function downloadURI(uri, name) {

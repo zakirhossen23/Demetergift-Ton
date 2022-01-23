@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Col from 'react-bootstrap/Col';
 import Image from 'react-bootstrap/Image';
 import Button from 'react-bootstrap/Button';
-
+import { bidsgetbytokenid } from '@/pages/Events/token'
 
 export default function ViewmodalShow({
 	show,
@@ -25,38 +25,35 @@ export default function ViewmodalShow({
 		maximumFractionDigits: 2,
 	});
 
+
 	async function fetchContractData() {
 		try {
 			if (id) {
-				const value = await contract.tokenURI(id);
-				console.log(value);
-				const arr = [];
-				const totalBids = await contract.getBidsSearchToken(id);
-				console.log(totalBids);
-				for (let i = 0; i < Number(10); i++) {
-					const obj = await totalBids[i];
-					const object = {};
-					try { object = await JSON.parse(obj) } catch { }
-					if (object.title) {
-						var pricedes1 = 0;
-						try { pricedes1 = formatter.format(Number(object.properties.bid.description * 0.371936)) } catch (ex) { }
-						const BidId = Number(await contract.getBidIdByUri(obj));
-						const Datetime = new Date(object.properties.time.description);
 
-						let currentdate = `${addZero(Datetime.getDate())}/${addZero(Datetime.getMonth() + 1)}/${addZero(Datetime.getFullYear())} ${addZero(Datetime.getHours())}:${addZero(Datetime.getMinutes())}:${addZero(Datetime.getSeconds())} ${AmPM(Datetime.getHours())}`
+				const arr = [];
+
+				const totalBids = await bidsgetbytokenid(id);
+				for (let i = 0; i < totalBids.length; i++) {
+					const object = await totalBids[i];
+					const Datetime = new Date(object.Date);
+
+					let currentdate = `${addZero(Datetime.getDate())}/${addZero(Datetime.getMonth() + 1)}/${addZero(Datetime.getFullYear())} ${addZero(Datetime.getHours())}:${addZero(Datetime.getMinutes())}:${addZero(Datetime.getSeconds())} ${AmPM(Datetime.getHours())}`
+
+					if (object.UserName) {
 						arr.push({
-							Id: BidId,
-							name: object.properties.username.description,
-							time: currentdate,
-							bidprice: object.properties.bid.description,
-							bidpriceusd: pricedes1
+							Date: currentdate,
+							UserName: object.UserName,
+							bidpriceusd: formatter.format(Bidprice * 0.371936),
+							Bidprice: Bidprice
 						});
+
 					}
 				}
+
 				console.log(arr);
 				setList(arr);
-				if (document.getElementById("Loading"))
-					document.getElementById("Loading").style = "display:none";
+				if (document.getElementById("LoadingView"))
+					document.getElementById("LoadingView").style = "display:none";
 				if (document.getElementById("Loadingtable")) {
 					var element = document.getElementById("Loadingtable");
 					element.style = "display:block";
@@ -89,6 +86,9 @@ export default function ViewmodalShow({
 
 			</Modal.Header>
 			<Modal.Body className="show-grid">
+				<div id='LoadingView' className="LoadingArea">
+					<h1>Loading...</h1>
+				</div>
 				<div id='Loadingtable' style={{ display: 'none' }} className="">
 					<div className='tableHeader'>
 						<div className='tableHeaderContainer'>
@@ -102,18 +102,19 @@ export default function ViewmodalShow({
 								<h4 className="header">Bid</h4>
 							</div>
 						</div>
+
 					</div> {list.map((listItem) => (
 						<div key={listItem.Id} className='tableFullRowContainer'>
 							<div className='tableRowContainer'>
 								<div className='tableRowCellContainer'>
 									<div className='tableRowCellDateContainer'>
-										<h5 className="cell">{listItem.time}</h5>
+										<h5 className="cell">{listItem.Date}</h5>
 									</div>
 									<div className='tableRowCellUserContainer'>
-										<h5 className="cell">{listItem.name}</h5>
+										<h5 className="cell">{listItem.UserName}</h5>
 									</div>
 									<div className="tableRowCellBidContainer">
-										<h5 className="cell">${listItem.bidpriceusd} ({listItem.bidprice} EVER)</h5>
+										<h5 className="cell">${listItem.bidpriceusd} ({listItem.Bidprice} EVER)</h5>
 									</div>
 								</div>
 							</div>

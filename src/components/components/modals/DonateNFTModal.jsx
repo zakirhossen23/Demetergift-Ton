@@ -67,7 +67,7 @@ export default function DonateNFTModal({
 		} catch (error) {
 			console.error(error);
 		}
-		window.location.href = `/donation/auction/${EventID}`;
+		window.location.href = `/donation/auction?${EventID}`;
 		window.document.getElementsByClassName("btn-close")[0].click();
 
 	}

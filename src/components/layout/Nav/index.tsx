@@ -18,16 +18,7 @@ export function Nav(): JSX.Element {
                         })}
                     </NavLink>
                 </li>
-                <li>
-                    <NavLink
-                        to="/pools"
-                        isActive={(_, location) => location.pathname.indexOf('/pool') === 0}
-                    >
-                        {intl.formatMessage({
-                            id: 'NAV_LINK_TEXT_POOLS',
-                        })}
-                    </NavLink>
-                </li>
+
                 <li>
                     <NavLink to="/tokens">
                         {intl.formatMessage({

@@ -28,11 +28,12 @@ export default function Auction() {
     const [selectid, setselectid] = useState('');
     const [selecttitle, setselecttitle] = useState('');
     const [selecttype, setselecttype] = useState('');
+    const [selectwallet, setselectwallet] = useState('');
     const [selectbid, setselectbid] = useState('');
     const boolTrue = true;
-    const [eventuri, setEventuri] = useState('');
     const [modalShow, setModalShow] = useState(false);
     const [ViewmodalShow, setViewModalShow] = useState(false);
+
 
     const formatter = new Intl.NumberFormat('en-US', {
         minimumFractionDigits: 2,
@@ -70,12 +71,13 @@ export default function Auction() {
                     const arr = [];
 
                     const totalTokens = await tokengetbyeventid(id);
+
                     for (let i = 0; i < totalTokens.length; i++) {
                         const object = await totalTokens[i];
 
                         if (object.name) {
                             var pricedes1 = 0;
-                            try { pricedes1 = formatter.format(Number(object.Bidprice * 0.371936)) } catch (ex) { }
+                            try { pricedes1 = formatter.format(Number(object.price * 0.371936)) } catch (ex) { }
 
                             arr.push({
                                 Id: object.id,
@@ -85,6 +87,7 @@ export default function Auction() {
                                 price: Number(object.price),
                                 type: object.type,
                                 image: object.image,
+
                             });
                         }
 
@@ -94,8 +97,8 @@ export default function Auction() {
                     if (document.getElementById("Loading"))
                         document.getElementById("Loading").style = "display:none";
 
-
-                    setEventuri(value);
+                    setselectwallet(value.wallet);
+                    console.log(value.wallet);
                     setTitle(value.title);
                     setgoalusd(formatter.format(Number(value.Goal * 0.371936)));
                     setgoal(Number(value.Goal));
@@ -153,7 +156,6 @@ export default function Auction() {
 
     function activateBidNFTModal(e) {
         setselectid(e.target.getAttribute("tokenid"));
-
         setselectbid(e.target.getAttribute("highestbid"));
         console.log(selectbid);
         setselecttype("NFT");
@@ -244,19 +246,19 @@ export default function Auction() {
 
                         <div style={{ width: "100%" }}>
                             <div className="DetialsContainer" style={{ rowGap: "5px" }} >
-                                <h1 >{listItem.name}</h1>
+                                <h2 style={{ fontSize: '3rem' }} >{listItem.name}</h2>
 
-                                <h4 style={{ color: "rgb(139, 139, 139)" }}>Type: {listItem.type}</h4>
+                                <h4 style={{ color: "rgb(139, 139, 139)", fontSize: '2rem' }}>Type: {listItem.type}</h4>
 
                                 <div className="TextContainer">
-                                    <h4 style={{ color: "#8B8B8B" }}>{listItem.description}</h4>
+                                    <h4 style={{ color: "#8B8B8B", fontSize: '2rem' }}>{listItem.description}</h4>
                                 </div>
                             </div>
                             <div className='ElementBottomContainer'>
                                 <div style={{ width: "116px" }}>
-                                    <h3 className="smallgrey">Current bid</h3>
-                                    <h4 className='bidprice'>$ {listItem.Bidprice} ({listItem.price} EVER)</h4>
-                                    <h7 name="date" date={date} className="smallgrey">{dateleftBid}</h7>
+                                    <h3 style={{ fontSize: '1.5rem' }} className="smallgrey">Current bid</h3>
+                                    <h4 style={{ fontSize: '2.5rem' }} className='bidprice'>$ {listItem.Bidprice} ({listItem.price} EVER)</h4>
+                                    <h7 style={{ fontSize: '1.5rem' }} name="date" date={date} className="smallgrey">{dateleftBid}</h7>
                                 </div>
                                 <div className='BidAllcontainer' >
                                     <div className='Bidsbutton'>
@@ -268,15 +270,15 @@ export default function Auction() {
 
 
                                         {listItem.type == "Cryptopunk" ? (
-                                            <div tokenid={listItem.Id} highestbid={listItem.price} className="Bidcontainer col" onClick={activateBidCryptopunkTModal}>
-                                                <div tokenid={listItem.Id} highestbid={listItem.price} className="card BidcontainerCard">
-                                                    <div tokenid={listItem.Id} highestbid={listItem.price} className="card-body bidbuttonText">Bid</div>
+                                            <div tokenid={listItem.Id} wallet={listItem.wallet} highestbid={listItem.price} className="Bidcontainer col" onClick={activateBidCryptopunkTModal}>
+                                                <div tokenid={listItem.Id} wallet={listItem.wallet} highestbid={listItem.price} className="card BidcontainerCard">
+                                                    <div tokenid={listItem.Id} wallet={listItem.wallet} highestbid={listItem.price} className="card-body bidbuttonText">Bid</div>
                                                 </div>
                                             </div>
                                         ) : (
-                                            <div tokenid={listItem.Id} highestbid={listItem.price} className="Bidcontainer col" onClick={activateBidNFTModal}>
-                                                <div tokenid={listItem.Id} highestbid={listItem.price} className="card BidcontainerCard">
-                                                    <div tokenid={listItem.Id} highestbid={listItem.price} className="card-body bidbuttonText">Bid</div>
+                                            <div tokenid={listItem.Id} wallet={listItem.wallet} highestbid={listItem.price} className="Bidcontainer col" onClick={activateBidNFTModal}>
+                                                <div tokenid={listItem.Id} wallet={listItem.wallet} highestbid={listItem.price} className="card BidcontainerCard">
+                                                    <div tokenid={listItem.Id} wallet={listItem.wallet} highestbid={listItem.price} className="card-body bidbuttonText">Bid</div>
                                                 </div>
                                             </div>
                                         )}
@@ -296,6 +298,7 @@ export default function Auction() {
                 }}
                 tokenId={selectid}
                 type={selecttype}
+                ToAddress={selectwallet}
                 eventId={eventId}
                 Highestbid={selectbid}
             />
@@ -305,7 +308,7 @@ export default function Auction() {
                 onHide={() => {
                     setViewModalShow(false);
                     // This is a poor implementation, better to implement an event listener
-                    fetchContractData();
+                    AuctionfetchContractData();
                 }}
                 id={selectid}
                 title={selecttitle}

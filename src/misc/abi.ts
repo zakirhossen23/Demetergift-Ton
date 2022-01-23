@@ -1588,12 +1588,12 @@ export class TokenAbi {
                 outputs: [
                     {
                         components: [{ name: 'root_address', type: 'address' },
-                            { name: 'wallet_public_key', type: 'uint256' },
-                            { name: 'owner_address', type: 'address' },
-                            { name: 'balance', type: 'uint128' },
-                            { name: 'receive_callback', type: 'address' },
-                            { name: 'bounced_callback', type: 'address' },
-                            { name: 'allow_non_notifiable', type: 'bool' }],
+                        { name: 'wallet_public_key', type: 'uint256' },
+                        { name: 'owner_address', type: 'address' },
+                        { name: 'balance', type: 'uint128' },
+                        { name: 'receive_callback', type: 'address' },
+                        { name: 'bounced_callback', type: 'address' },
+                        { name: 'allow_non_notifiable', type: 'bool' }],
                         name: 'value0',
                         type: 'tuple',
                     },
@@ -1624,7 +1624,7 @@ export class TokenAbi {
                 outputs: [
                     {
                         components: [{ name: 'remaining_tokens', type: 'uint128' },
-                            { name: 'spender', type: 'address' }],
+                        { name: 'spender', type: 'address' }],
                         name: 'value0',
                         type: 'tuple',
                     },
@@ -1666,11 +1666,9 @@ export class TokenAbi {
                 name: 'transfer',
                 inputs: [
                     { name: 'to', type: 'address' },
-                    { name: 'tokens', type: 'uint128' },
                     { name: 'grams', type: 'uint128' },
                     { name: 'send_gas_to', type: 'address' },
                     { name: 'notify_receiver', type: 'bool' },
-                    { name: 'payload', type: 'cell' },
                 ],
                 outputs: [
                 ],

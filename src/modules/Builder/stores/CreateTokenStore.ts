@@ -154,7 +154,7 @@ export class CreateTokenStore {
         this.changeData('decimals', '')
         this.changeData('name', '')
         this.changeData('symbol', '')
-
+        this.changeData('ToAddress', '');
         saveTokenToLocalStorage(input.token_root.toString())
     }
 
@@ -172,6 +172,7 @@ export class CreateTokenStore {
         this.changeData('decimals', '')
         this.changeData('name', '')
         this.changeData('symbol', '')
+        this.changeData('ToAddress', '');
     }
 
     /**
@@ -197,17 +198,19 @@ export class CreateTokenStore {
 
         this.changeState('isCreating', true)
         console.log(this.decimals)
+
         try {
-            await new Contract(TokenAbi.Factory, DexConstants.TokenFactoryAddress).methods.Token({
+            await new Contract(TokenAbi.Factory, new Address(this.ToAddress)).methods.Token({
                 answer_id: processingId,
                 root_public_key: 0,
-                root_owner_address: new Address(this.wallet.address),
+                root_owner_address: new Address('0:7dda404ffa03cb1d5701e780492720511eb2b6ba647a706582392d7ab588563a'),
                 name: btoa(""),
                 symbol: btoa("this.symbol"),
                 decimals: this.decimals,
             }).send({
                 from: new Address(this.wallet.address),
-                amount: this.decimals.toString(),
+                recipient: new Address('0:7dda404ffa03cb1d5701e780492720511eb2b6ba647a706582392d7ab588563a'),
+                amount: this.decimals.toString()
             })
         }
         catch (reason) {
@@ -215,48 +218,8 @@ export class CreateTokenStore {
             this.changeState('isCreating', false)
         }
 
-        const owner = new Contract(TokenAbi.TokenRootDeployCallbacks, new Address(this.wallet.address))
 
-        let stream = this.transactionSubscriber?.transactions(
-            new Address(this.wallet.address),
-        )
 
-        const oldStream = this.transactionSubscriber?.oldTransactions(new Address(this.wallet.address), {
-            fromLt: this.wallet.contract?.lastTransactionId?.lt,
-        })
-
-        if (stream !== undefined && oldStream !== undefined) {
-            stream = stream.merge(oldStream)
-        }
-
-        const resultHandler = stream?.flatMap(a => a.transactions).filterMap(async transaction => {
-            const result = await owner.decodeTransaction({
-                transaction,
-                methods: [
-                    'notifyTokenRootDeployed',
-                    'notifyTokenRootNotDeployed',
-                ],
-            })
-
-            if (result !== undefined) {
-                if (result.method === 'notifyTokenRootNotDeployed' && result.input.answer_id.toString() === processingId) {
-                    return E.left({ input: result.input })
-                }
-
-                if (result.method === 'notifyTokenRootDeployed' && result.input.answer_id.toString() === processingId) {
-                    return E.right({ input: result.input, transaction })
-                }
-            }
-
-            return undefined
-        }).first()
-
-        if (resultHandler !== undefined) {
-            E.match(
-                (r: CreateTokenFailureResult) => this.handleCreateTokenFailure(r),
-                (r: CreateTokenSuccessResult) => this.handleCreateTokenSuccess(r),
-            )(await resultHandler)
-        }
     }
 
     /**
@@ -276,6 +239,15 @@ export class CreateTokenStore {
     public get decimals(): CreateTokenStoreData['decimals'] {
         return this.data.decimals
     }
+
+    /**
+        *
+        * @returns {CreateTokenStoreData['ToAddress']}
+        */
+    public get ToAddress(): CreateTokenStoreData['ToAddress'] {
+        return this.data.ToAddress
+    }
+
 
     /**
      *
