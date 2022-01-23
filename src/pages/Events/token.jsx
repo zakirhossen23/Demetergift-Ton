@@ -43,6 +43,8 @@ export async function createBid(Tokenid, UserName, Bidprice) {
         },
         body: `{"Tokenid":${Tokenid},"Date":"${currentDate}","UserName":"${UserName._address}","Bidprice": ${Bidprice}}`
     };
+    var booltrue = true;
+
     while (booltrue) {
         try {
             await fetch(url, options)
